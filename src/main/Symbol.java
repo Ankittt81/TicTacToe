@@ -1,5 +1,10 @@
 package main;
 
 public class Symbol {
-    private char sym;
+    private String sym;
+
+    public Symbol(String sym) {
+        this.sym = sym;
+    }
+
 }
