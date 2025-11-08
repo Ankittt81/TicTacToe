@@ -25,15 +25,17 @@ public class GameController {
         return game.getGameState();
     }
     public void display(Game game){
+        game.display();
     }
 
     public void makeMove(Game game){
-
+        game.makeMove();
     }
     public String getWinner(Game game){
-
+        return null;
     }
     private int getDimension(){
+        System.out.print("Enter the size of the board: ");
         int dimension=input.nextInt();
         return dimension;
     }
@@ -42,10 +44,14 @@ public class GameController {
         System.out.println("Let's add the players now : ");
         List<Player> players=new ArrayList<>();
         for(int i=0;i<dimension-1;i++){
-            System.out.println("Add Player details : Name Symbol");
-            String details=input.nextLine();
-            String[] detailsArray=details.split(",");
-            Player player=new Human(i,detailsArray[0],new Symbol(detailsArray[1]),PlayerType.HUMAN);
+//            System.out.println("Add Player details : Name Symbol");
+//            String details=input.nextLine();
+//            String[] detailsArray=details.split(",");
+            System.out.println("Enter the player name: ");
+            String name=input.next();
+            System.out.println("Enter the player symbol: ");
+            String symbol=input.next();
+            Player player=new Human(i,name,new Symbol(symbol),PlayerType.HUMAN);
             players.add(player);
         }
         return players;

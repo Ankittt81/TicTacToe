@@ -7,4 +7,11 @@ public class Symbol {
         this.sym = sym;
     }
 
+    public String getSym() {
+        return sym;
+    }
+
+    public void setSym(String sym) {
+        this.sym = sym;
+    }
 }
