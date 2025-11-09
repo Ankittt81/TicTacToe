@@ -83,9 +83,39 @@ public class Game {
            setGameState(GameState.DRAW);
        }
    }
+
+   public void undo(){
+       if(moves.size()==0){
+           System.out.println("Nothing to undo! Let's move the game guys. Be serious");
+           return;
+       }
+       Move lastmove=moves.get(moves.size()-1);
+       Cell cell=lastmove.getCell();
+       cell.setPlayer(null);
+       cell.setCellState(CellState.EMPTY);
+
+       nextPlayerIndex--;
+       nextPlayerIndex=(nextPlayerIndex+players.size())%players.size();
+
+       moves.remove(lastmove);
+
+       //update the strategy
+       for(WinningStrategy strategy:winningStrategies){
+           strategy.handleUndo(board,lastmove);
+       }
+       setWinner(null);
+       setGameState(GameState.IN_PROGRESS);
+   }
+
+
+
    public void display(){
        board.display();
    }
+
+
+
+
 
     public Board getBoard() {
         return board;

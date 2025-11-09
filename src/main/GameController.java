@@ -1,5 +1,6 @@
 package main;
 
+import main.strategies.RowWinningStrategy;
 import main.strategies.WinningStrategy;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class GameController {
 
         //ask for winning strategies
         List<WinningStrategy> winningStrategies=new ArrayList<>();
-
+        winningStrategies.add(new RowWinningStrategy());
 
         return new Game(dimension,players,winningStrategies);
     }
@@ -32,7 +33,7 @@ public class GameController {
         game.makeMove();
     }
     public String getWinner(Game game){
-        return null;
+        return game.getWinner().getName();
     }
     private int getDimension(){
         System.out.print("Enter the size of the board: ");
@@ -42,18 +43,34 @@ public class GameController {
 
     private List<Player> getPlayers(int dimension){
         System.out.println("Let's add the players now : ");
+        //Modify function for Bot
+        System.out.println("Do you want a Bot in the game? [Y/N]");
+        String answer=input.next();
         List<Player> players=new ArrayList<>();
-        for(int i=0;i<dimension-1;i++){
-//            System.out.println("Add Player details : Name Symbol");
-//            String details=input.nextLine();
-//            String[] detailsArray=details.split(",");
-            System.out.println("Enter the player name: ");
-            String name=input.next();
-            System.out.println("Enter the player symbol: ");
-            String symbol=input.next();
-            Player player=new Human(i,name,new Symbol(symbol),PlayerType.HUMAN);
+
+        int countOfPlayers=dimension-1;
+
+        if(answer.equalsIgnoreCase("Y")){
+            Player player=new Bot(0,"Bot",new Symbol("B"),PlayerType.BOT,BotDifficultyLevel.EASY);
+            players.add(player);
+            countOfPlayers--;
+        }
+        input.nextLine();
+        for(int i=0;i<countOfPlayers;i++){
+            System.out.println("Add Player details : Name Symbol");
+            String details=input.nextLine();
+            String[] detailsArray=details.split(" ");
+//            System.out.println("Enter the player name: ");
+//            String name=input.next();
+//            System.out.println("Enter the player symbol: ");
+//            String symbol=input.next();
+            Player player=new Human(i,detailsArray[0],new Symbol(detailsArray[1]),PlayerType.HUMAN);
             players.add(player);
         }
         return players;
+    }
+
+    public void undo(Game game){
+        game.undo();
     }
 }
